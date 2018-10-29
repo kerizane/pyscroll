@@ -324,7 +324,7 @@ class BufferedRenderer(object):
         # if not self.anchored_view:
         #     surface.fill(self._clear_color, self._previous_blit)
         if not self._anchored_view:
-            self._clear_surface(surface, self._previous_blit)
+            self._clear_surface(surface, surface.get_rect())
 
         offset = -self._x_offset + rect.left, -self._y_offset + rect.top
 
@@ -389,7 +389,8 @@ class BufferedRenderer(object):
                                 continue
 
                         tile = get_tile(x // tw + left, y // th + top, l)
-                        tile and surface_blit(tile, (x - ox, y - oy))
+                        if tile:
+                            surface_blit(tile, (x - ox, y - oy))
 
     def _queue_edge_tiles(self, dx, dy):
         """ Queue edge tiles and clear edge areas on buffer if needed
